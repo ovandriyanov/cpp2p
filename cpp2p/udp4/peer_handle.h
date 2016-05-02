@@ -1,3 +1,11 @@
+/*
+ *  peer_handle.h
+ *  cpp2p
+ *
+ *  Created by Oleg Andriyanov on 02/05/2016.
+ *
+ */
+
 #ifndef CPP2P_UDP4_PEER_HANDLE_H
 #define CPP2P_UDP4_PEER_HANDLE_H
 
