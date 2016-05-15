@@ -12,6 +12,7 @@
 #include <stdint.h>
 
 #include <functional>
+#include <memory>
 
 #include <boost/range/iterator_range.hpp>
 
@@ -55,7 +56,7 @@ public:
     };
 
     virtual ~peer_handle_t() = default;
-    virtual void set_delegate(std::unique_ptr<delegate_t>) = 0;
+    virtual void set_delegate(std::shared_ptr<delegate_t>) = 0;
     virtual void bind(const ports_t&) = 0;
     virtual void recv(const ports_t&) = 0;
     virtual void send(const packets_t&) = 0;
