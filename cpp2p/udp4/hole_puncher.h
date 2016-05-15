@@ -13,6 +13,7 @@
 
 #include <memory>
 
+#include "cpp2p/udp4/hole_punching_settings.h"
 #include "cpp2p/util.h"
 
 namespace cpp2p {
@@ -48,7 +49,8 @@ public:
     };
 
     virtual ~hole_puncher_t() = default;
-    virtual void start(std::shared_ptr<delegate_t>) = 0;
+    virtual void start(std::shared_ptr<delegate_t>,
+                       const hole_punching_settings_t& = hole_punching_settings_t()) = 0;
     virtual void stop() = 0;
 };
 
