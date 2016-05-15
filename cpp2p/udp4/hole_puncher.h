@@ -12,7 +12,8 @@
 #include <stdint.h>
 
 #include <memory>
-#include <utility>
+
+#include "cpp2p/util.h"
 
 namespace cpp2p {
 
@@ -30,7 +31,6 @@ struct endpoint_t
     uint16_t port;
 };
 
-template <typename T> using two_t = std::pair<T, T>;
 using hole_t = two_t<endpoint_t>;
 
 class hole_puncher_t
