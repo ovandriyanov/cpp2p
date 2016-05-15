@@ -42,7 +42,7 @@ public:
         virtual ~delegate_t() = default;
         virtual timer_t& timer() = 0;
         virtual event_loop_t& event_loop() = 0;
-        virtual two_t<peer_handle_t&> peer_handles() = 0;
+        virtual const two_t<peer_handle_t&>& peer_handles() = 0;
         virtual void hole_punched(hole_t&&) = 0;
         virtual void error_occurred(hole_punching_error_t&&) = 0;
     };
