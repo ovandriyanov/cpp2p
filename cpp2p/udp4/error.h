@@ -25,6 +25,11 @@ class algorithm_failure_t : public hole_punching_error_t
 public:
     enum class code_t
     {
+        // Invalid arguments
+        SAME_PEER,
+        ALREADY_IN_PROGRESS,
+
+        // Traversal failures
         TOO_MANY_RETRIES,
         FIRST_PEER_TOO_MANY_ERRORS,
         SECOND_PEER_TOO_MANY_ERRORS
