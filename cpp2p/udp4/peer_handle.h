@@ -43,7 +43,6 @@ public:
     {
     public:
         virtual ~delegate_t() = default;
-        virtual uint32_t address() const = 0;
         virtual void bound(port_t) = 0;
         virtual void error_binding(port_t, error_code_t) = 0;
         virtual void packet_received(const packet_t&) = 0;

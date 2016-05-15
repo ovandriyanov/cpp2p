@@ -21,11 +21,15 @@ class hole_punching_settings_t
 public:
     hole_punching_settings_t();
 
+    hole_punching_settings_t& public_ips(const two_t<uint32_t>& ips);
+    const two_t<uint32_t> public_ips() const;
+
     static const uint16_t DESIRED_PORT_ANY = 0;
     hole_punching_settings_t& desired_ports(const two_t<uint16_t>& ports);
     const two_t<uint16_t>& desired_ports() const;
 
 private:
+    two_t<uint32_t> public_ips_;
     two_t<uint16_t> desired_ports_;
 };
 
@@ -35,13 +39,27 @@ inline hole_punching_settings_t::hole_punching_settings_t()
 }
 
 inline hole_punching_settings_t&
+hole_punching_settings_t::public_ips(const two_t<uint32_t>& ips)
+{
+    public_ips_ = ips;
+    return *this;
+}
+
+inline const two_t<uint32_t>
+hole_punching_settings_t::public_ips() const
+{
+    return public_ips_;
+}
+
+inline hole_punching_settings_t&
 hole_punching_settings_t::desired_ports(const two_t<uint16_t>& ports)
 {
     desired_ports_ = ports;
     return *this;
 }
 
-inline const two_t<uint16_t>& hole_punching_settings_t::desired_ports() const
+inline const two_t<uint16_t>&
+hole_punching_settings_t::desired_ports() const
 {
     return desired_ports_;
 }
