@@ -49,7 +49,7 @@ public:
     };
 
     virtual ~hole_puncher_t() = default;
-    virtual void start(std::shared_ptr<delegate_t>,
+    virtual void start(const std::shared_ptr<delegate_t>&,
                        const hole_punching_settings_t& = hole_punching_settings_t()) = 0;
     virtual void stop() = 0;
 };
