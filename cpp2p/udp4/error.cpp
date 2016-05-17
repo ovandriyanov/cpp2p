@@ -27,6 +27,28 @@ algorithm_failure_t::code_t algorithm_failure_t::code() const
     return code_;
 }
 
+culprit_peer_t::culprit_peer_t(peer_t which)
+: which_peer_(which)
+{
+}
+
+culprit_peer_t::peer_t culprit_peer_t::which_peer()
+{
+    return which_peer_;
+}
+
+peer_error_t::peer_error_t(peer_t which, code_t code, const std::string& what)
+: hole_punching_error_t(what)
+, culprit_peer_t(which)
+, code_(code)
+{
+}
+
+peer_error_t::code_t peer_error_t::code() const
+{
+    return code_;
+}
+
 fatal_peer_error_t::fatal_peer_error_t(peer_t which_peer,
                                        std::exception_ptr nested_error,
                                        const std::string& what)

@@ -25,14 +25,9 @@ class algorithm_failure_t : public hole_punching_error_t
 public:
     enum class code_t
     {
-        // Invalid arguments
         SAME_PEER,
         ALREADY_IN_PROGRESS,
-
-        // Traversal failures
-        TOO_MANY_RETRIES,
-        FIRST_PEER_TOO_MANY_ERRORS,
-        SECOND_PEER_TOO_MANY_ERRORS
+        TOO_MANY_RETRIES
     };
 
     algorithm_failure_t(code_t code, const std::string& what);
@@ -42,18 +37,43 @@ private:
     code_t code_;
 };
 
-class fatal_peer_error_t : public hole_punching_error_t
+class culprit_peer_t
+{
+public:
+    enum class peer_t { FIRST, SECOND };
+    culprit_peer_t(peer_t which);
+    peer_t which_peer();
+
+private:
+    peer_t which_peer_;
+};
+
+class peer_error_t : public hole_punching_error_t, public culprit_peer_t
+{
+public:
+    enum class code_t
+    {
+        PROTOCOL_VIOLATION,
+        TOO_MANY_ERRORS
+    };
+
+    peer_error_t(peer_t which, code_t code, const std::string& what);
+    code_t code() const;
+
+private:
+    code_t code_;
+};
+
+class fatal_peer_error_t : public hole_punching_error_t, public culprit_peer_t
 {
 public:
     enum class peer_t { FIRST, SECOND };
 
     fatal_peer_error_t(peer_t which_peer, std::exception_ptr nested_error,
                        const std::string& what);
-    peer_t which_peer() const;
     std::exception_ptr nested_error() const;
 
 private:
-    peer_t which_peer_;
     std::exception_ptr nested_error_;
 };
 
