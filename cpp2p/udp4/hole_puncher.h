@@ -37,20 +37,18 @@ using hole_t = two_t<endpoint_t>;
 class hole_puncher_t
 {
 public:
-    class delegate_t
+    struct context_t
     {
-    public:
-        virtual ~delegate_t() = default;
-        virtual timer_t& timer() = 0;
-        virtual event_loop_t& event_loop() = 0;
-        virtual const two_t<peer_handle_t&>& peer_handles() = 0;
-        virtual void hole_punched(hole_t&&) = 0;
-        virtual void error_occurred(hole_punching_error_t&&) = 0;
+        event_loop_t& event_loop;
+        timer_t& timer;
+        two_t<peer_handle_t&> peer_handles;
     };
+    using cb_t = std::function<void(hole_punching_error_t&&, hole_t&&)>;
 
     virtual ~hole_puncher_t() = default;
-    virtual void start(const std::shared_ptr<delegate_t>&,
-                       const hole_punching_settings_t& = hole_punching_settings_t()) = 0;
+    virtual void start(const cb_t& callback,
+                       const context_t& context,
+                       const hole_punching_settings_t& settings = hole_punching_settings_t()) = 0;
     virtual void stop() = 0;
 };
 

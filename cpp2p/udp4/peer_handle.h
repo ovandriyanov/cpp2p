@@ -22,44 +22,28 @@ namespace udp4 {
 using port_t = uint16_t;
 using ports_t = std::vector<port_t>;
 
-struct packet_t
-{
-    std::string payload;
-    port_t src_port;
-    port_t dst_port;
-};
 using packets_t = std::vector<packet_t>;
 
 class peer_handle_t
 {
 public:
-    enum class error_code_t
+    enum error_code_t
     {
-        BAD_PAYLOAD_SIZE,
-        ADDRESS_ALREADY_IN_USE,
-        UNEXPECTED_ERROR
+        EC_OK = 0,
+        EC_BAD_PAYLOAD_SIZE,
+        EC_ADDRESS_ALREADY_IN_USE,
+        EC_UNEXPECTED_ERROR
     };
-    class delegate_t
-    {
-    public:
-        virtual ~delegate_t() = default;
-        virtual void bound(port_t) = 0;
-        virtual void error_binding(port_t, error_code_t) = 0;
-        virtual void packet_received(const packet_t&) = 0;
-        virtual void error_receiving_packet(port_t, error_code_t) = 0;
-        virtual void packet_sent(port_t src_port) = 0;
-        virtual void error_sending_packet(port_t src_port, error_code_t) = 0;
-        virtual void closed(port_t) = 0;
-        virtual void error_closing(port_t, error_code_t) = 0;
-        virtual void fatal_error_occurred() = 0;
-    };
+    using port_cb_t = std::function<void(error_code_t, port_t)>;
+    using packet_cb_t = std::function<void(error_code_t, port_t src, port_t dst,
+                                           std::string payload)>;
 
-    virtual ~peer_handle_t() = default;
-    virtual void set_delegate(std::shared_ptr<delegate_t>) = 0;
-    virtual void bind(const ports_t&) = 0;
-    virtual void recv(const ports_t&) = 0;
-    virtual void send(const packets_t&) = 0;
-    virtual void close(const ports_t&) = 0;
+    virtual void bind(const ports_t&, const port_cb_t&) = 0;
+    virtual void recv(const ports_t&, const packet_cb_t&) = 0;
+    virtual void send(port_t src, port_t dst, const std::string& payload,
+                      const port_cb_t&) = 0;
+    virtual void close(const ports_t&, const port_cb_t&) = 0;
+    virtual void stop() = 0;
 };
 
 } // namespace udp4
