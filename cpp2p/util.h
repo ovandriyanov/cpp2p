@@ -11,6 +11,10 @@
 
 #include <utility>
 
+namespace cpp2p {
+
 template <typename T> using two_t = std::pair<T, T>;
+
+} // namespace cpp2p
 
 #endif // CPP2P_UTIL_H
