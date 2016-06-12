@@ -1,7 +1,9 @@
 lib cpp2p
-    : cpp2p/udp4/impl/hole_puncher.cpp
-      cpp2p/udp4/error.cpp
-    : <link>static
-      <include>.
-      <toolset>gcc:<cxxflags>-std=c++11
-    ;
+:
+    cpp2p/udp4/hole_puncher.cpp
+    cpp2p/udp4/error.cpp
+:
+    <link>static
+    <include>.
+    <toolset>gcc:<cxxflags>-std=c++11
+;
